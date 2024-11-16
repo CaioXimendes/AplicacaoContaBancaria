@@ -9,13 +9,19 @@ public class PaginaCadastro extends JFrame{
     private JTextField emailTextField;
     private JPasswordField passwordField;
     private JButton cadastrarButton;
-    private JPanel JPanelMain;
+    private JPanel painelprincipal;
+    private JPanel panelButton;
+    private JPanel painelCadastro;
 
     public PaginaCadastro(){
 
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String nomeCliente = nomeTextField.getText().trim();
+                String emailCliente = emailTextField.getText().trim();
+                String senhaCliente = passwordField.getText().trim();
+                System.out.println(nomeCliente+"\n"+emailCliente+"\n"+senhaCliente);
                 System.out.println("Cadastrado!");
             }
         });
@@ -23,7 +29,7 @@ public class PaginaCadastro extends JFrame{
 
     public static void main(String[] args) {
         PaginaCadastro p1 = new PaginaCadastro();
-        p1.setContentPane(p1.JPanelMain);
+        p1.setContentPane(p1.painelprincipal);
         p1.setVisible(true);
         p1.setSize(500,500);
         p1.setDefaultCloseOperation(EXIT_ON_CLOSE);
