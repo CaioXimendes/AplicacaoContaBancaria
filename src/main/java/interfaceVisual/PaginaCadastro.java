@@ -1,8 +1,11 @@
 package interfaceVisual;
 
+import conexaoBancoDeDados.ConexaoBancoDeDados;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class PaginaCadastro extends JFrame{
     private JTextField nomeTextField;
@@ -21,8 +24,12 @@ public class PaginaCadastro extends JFrame{
                 String nomeCliente = nomeTextField.getText().trim();
                 String emailCliente = emailTextField.getText().trim();
                 String senhaCliente = passwordField.getText().trim();
+                int numeroContaCliente = (int) (Math.random() * 9999);
                 System.out.println(nomeCliente+"\n"+emailCliente+"\n"+senhaCliente);
                 System.out.println("Cadastrado!");
+                ConexaoBancoDeDados conexaobanco1 = new ConexaoBancoDeDados();
+                try{conexaobanco1.inserirDadosContaBancaria(nomeCliente,emailCliente,senhaCliente,numeroContaCliente);}
+                catch (SQLException ex){throw new RuntimeException(ex);}
                 PaginaLogin paginaLogin = new PaginaLogin();
                 paginaLogin.setVisible(true);
                 paginaLogin.setSize(500,500);

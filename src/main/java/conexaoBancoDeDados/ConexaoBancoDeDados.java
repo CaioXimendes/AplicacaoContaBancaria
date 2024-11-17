@@ -1,10 +1,6 @@
 package conexaoBancoDeDados;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ConexaoBancoDeDados {
     public void inserirDadosContaBancaria(String NomeCliente, String emailCliente, String senhaCliente, int numeroContaCliente) throws SQLException {
@@ -13,16 +9,23 @@ public class ConexaoBancoDeDados {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexao1 = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/?user=root","root","database123");
             Statement statement = conexao1.createStatement();
-            ResultSet resultSet = statement.executeQuery("INSERT INTO ContaBancaria (NomeCliente, emailCliente, senhaCliente, numeroContaCliente) VALUES" +"("+NomeCliente+","+emailCliente+","+senhaCliente+","+numeroContaCliente+");");
+            PreparedStatement preparedStatement;
+            String sql;
+            sql = "use bancodedados;";
+            preparedStatement = conexao1.prepareStatement(sql);
+            preparedStatement.execute();
+            //String sql = "INSERT INTO ContaBancaria VALUES "+"("+NomeCliente+","+emailCliente+","+senhaCliente+","+numeroContaCliente+","+0+");";
+            sql = "INSERT INTO ContaBancaria (NomeCliente, emailCliente, senhaCliente, numeroContaCliente, saldoCliente) VALUES (?,?,?,?,?);";
+            preparedStatement = conexao1.prepareStatement(sql);
+            preparedStatement.setString(1,NomeCliente);
+            preparedStatement.setString(2,emailCliente);
+            preparedStatement.setString(3,senhaCliente);
+            preparedStatement.setInt(4,numeroContaCliente);
+            preparedStatement.setDouble(5,0);
+            preparedStatement.execute();
             System.out.println("Conectado!");
-            if(resultSet.next()){
-                System.out.println(resultSet.getString("1"));
-            }
-//            ResultSet resultSet = conexao1.createStatement().executeQuery("SHOW DATABASES;");
-//            System.out.println(resultSet);
         }
         catch (ClassNotFoundException ex){
-//            Logger.getLogger(ConexaoBancoDeDados.class.getName()).log(Level.SEVERE, null , ex);}
             System.out.println("Driver do Banco de dados não localizado!");
         }
         catch (SQLException ex){
@@ -33,6 +36,5 @@ public class ConexaoBancoDeDados {
                 conexao1.close();
             }
         }
-
     }
 }
