@@ -1,8 +1,11 @@
 package interfaceVisual;
 
+import conexaoBancoDeDados.ConexaoBancoDeDados;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class PaginaLogin extends JFrame{
     private JTextField nomeTextField;
@@ -23,6 +26,12 @@ public class PaginaLogin extends JFrame{
                 String senhaCliente = passwordField.getText().trim();
                 System.out.println(nomeCliente+"\n"+emailCliente+"\n"+senhaCliente);
                 System.out.println("Logado!");
+                ConexaoBancoDeDados conexao1 = new ConexaoBancoDeDados();
+                try{conexao1.realizarLogin(nomeCliente, emailCliente, senhaCliente);}
+                catch (SQLException ex){
+                    throw new RuntimeException();
+                }
+
                 PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
                 paginaPrincipal.setVisible(true);
                 paginaPrincipal.setSize(500,500);
