@@ -75,4 +75,5 @@ public class ConexaoBancoDeDados {
         }
         return logado;
     }
+    public void consultarInformacoesBanco(){}
 }
