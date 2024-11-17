@@ -20,6 +20,19 @@ public class PaginaLogin extends JFrame{
     private String emailCliente;
     private String senhaCliente;
 
+    private int numeroContaCliente;
+    private double saldoCliente;
+
+    public void setNumeroContaCliente(int numeroContaCliente) {
+        this.numeroContaCliente = numeroContaCliente;
+    }
+
+    public void setSaldoCliente(double saldoCliente) {
+        this.saldoCliente = saldoCliente;
+    }
+
+
+
     public PaginaLogin(){
         setContentPane(painelPrincipal);
         logarButton.addActionListener(new ActionListener() {
@@ -39,6 +52,8 @@ public class PaginaLogin extends JFrame{
                         paginaPrincipal.setSize(500,500);
                         paginaPrincipal.setLocation(700,300);
                         paginaPrincipal.setNomeCliente(nomeCliente);
+                        paginaPrincipal.setNumeroConta(conexao1.getNumeroConta());
+                        paginaPrincipal.setSaldoCliente(conexao1.getSaldoCliente());
                         System.out.println(paginaPrincipal.getNomeCliente());
 //                fecha a pagina de login e abre a pagina principal
                         dispose();

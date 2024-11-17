@@ -1,8 +1,23 @@
 package conexaoBancoDeDados;
 
+import interfaceVisual.PaginaLogin;
+import interfaceVisual.PaginaPrincipal;
+
 import java.sql.*;
 
-public class ConexaoBancoDeDados {
+public class ConexaoBancoDeDados{
+    private int numeroConta;
+
+    public int getNumeroConta() {
+        return numeroConta;
+    }
+
+    public double getSaldoCliente() {
+        return saldoCliente;
+    }
+
+    private double saldoCliente;
+
     public void inserirDadosContaBancaria(String NomeCliente, String emailCliente, String senhaCliente, int numeroContaCliente) throws SQLException {
         Connection conexao1 = null;
         try{
@@ -40,6 +55,7 @@ public class ConexaoBancoDeDados {
     public boolean realizarLogin(String NomeCliente, String emailCliente, String senhaCliente) throws SQLException{
         Connection conexao1 = null;
         boolean logado = false;
+        PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
         try {
             ResultSet resultSet;
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -50,13 +66,15 @@ public class ConexaoBancoDeDados {
             sql = "use bancodedados;";
             preparedStatement = conexao1.prepareStatement(sql);
             preparedStatement.execute();
-            sql = "SELECT NomeCliente, emailCliente, senhaCliente from ContaBancaria where NomeCliente =? and emailCliente=? and senhaCliente=?;";
+            sql = "SELECT NomeCliente, emailCliente, senhaCliente, numeroContaCliente, saldoCliente from ContaBancaria where NomeCliente =? and emailCliente=? and senhaCliente=?;";
             preparedStatement = conexao1.prepareStatement(sql);
             preparedStatement.setString(1, NomeCliente);
             preparedStatement.setString(2,emailCliente);
             preparedStatement.setString(3,senhaCliente);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
+                numeroConta = resultSet.getInt("numeroContaCliente");
+                saldoCliente = resultSet.getDouble("saldoCliente");
 //                System.out.println(resultSet.getString("NomeCliente"));
 //                System.out.println(resultSet.getString("emailCliente"));
 //                System.out.println(resultSet.getString("senhaCliente"));
