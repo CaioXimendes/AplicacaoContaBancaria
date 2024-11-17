@@ -18,6 +18,7 @@ public class PaginaPrincipal extends JFrame{
 
     public PaginaPrincipal(){
         setContentPane(painelPrincipal);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         transferirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
