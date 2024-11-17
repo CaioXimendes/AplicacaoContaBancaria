@@ -37,8 +37,9 @@ public class ConexaoBancoDeDados {
             }
         }
     }
-    public void realizarLogin(String NomeCliente, String emailCliente, String senhaCliente) throws SQLException{
+    public boolean realizarLogin(String NomeCliente, String emailCliente, String senhaCliente) throws SQLException{
         Connection conexao1 = null;
+        boolean logado = false;
         try {
             ResultSet resultSet;
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -56,10 +57,13 @@ public class ConexaoBancoDeDados {
             preparedStatement.setString(3,senhaCliente);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
-                System.out.println(resultSet.getString("NomeCliente"));
-                System.out.println(resultSet.getString("emailCliente"));
-                System.out.println(resultSet.getString("senhaCliente"));}
-            System.out.println("Logado atraves do banco de dados!");
+//                System.out.println(resultSet.getString("NomeCliente"));
+//                System.out.println(resultSet.getString("emailCliente"));
+//                System.out.println(resultSet.getString("senhaCliente"));
+                System.out.println("Logado atraves do banco de dados!");
+                logado = true;
+            }else{System.out.println("Falha no login, credenciais erradas!");}
+
         } catch (ClassNotFoundException ex) {
             System.out.println("Driver do Banco de dados não localizado!");
         } catch (SQLException ex) {
@@ -69,5 +73,6 @@ public class ConexaoBancoDeDados {
                 conexao1.close();
             }
         }
+        return logado;
     }
 }
