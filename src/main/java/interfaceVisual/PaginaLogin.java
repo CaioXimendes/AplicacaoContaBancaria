@@ -23,15 +23,13 @@ public class PaginaLogin extends JFrame{
                 String senhaCliente = passwordField.getText().trim();
                 System.out.println(nomeCliente+"\n"+emailCliente+"\n"+senhaCliente);
                 System.out.println("Logado!");
+                PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
+                paginaPrincipal.setVisible(true);
+                paginaPrincipal.setSize(500,500);
+                paginaPrincipal.setLocation(700,300);
+//                fecha a pagina de login e abre a pagina principal
+                dispose();
             }
         });
-    }
-
-    public static void main(String[] args) {
-        PaginaLogin p2 = new PaginaLogin();
-        p2.setContentPane(p2.painelPrincipal);
-        p2.setVisible(true);
-        p2.setSize(500,500);
-        p2.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }
