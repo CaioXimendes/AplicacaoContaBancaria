@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConexaoBancoDeDados {
-    public static void main(String[] args) throws SQLException {
+    public void inserirDadosContaBancaria(String NomeCliente, String emailCliente, String senhaCliente, int numeroContaCliente) throws SQLException {
         Connection conexao1 = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexao1 = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/?user=root","root","database123");
             Statement statement = conexao1.createStatement();
-            ResultSet resultSet = statement.executeQuery("SHOW DATABASES;");
+            ResultSet resultSet = statement.executeQuery("INSERT INTO ContaBancaria (NomeCliente, emailCliente, senhaCliente, numeroContaCliente) VALUES" +"("+NomeCliente+","+emailCliente+","+senhaCliente+","+numeroContaCliente+");");
             System.out.println("Conectado!");
             if(resultSet.next()){
                 System.out.println(resultSet.getString("1"));
