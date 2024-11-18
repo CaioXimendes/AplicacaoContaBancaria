@@ -189,4 +189,44 @@ public class ConexaoBancoDeDados{
             }
         }
     }
+    public void reduzirSaldo(String NomeCliente, String emailCliente, String senhaCliente, double SaldoCliente, double valorReducao) throws SQLException{
+        Connection conexao1 = null;
+        try {
+            ResultSet resultSet;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conexao1 = DriverManager.getConnection("jdbc:mysql://192.168.15.8:3306/?user=caiofsx", "caiofsx", "database123");
+            Statement statement = conexao1.createStatement();
+            PreparedStatement preparedStatement;
+            String sql;
+            sql = "use bancodedados;";
+            preparedStatement = conexao1.prepareStatement(sql);
+            preparedStatement.execute();
+            sql = "SELECT saldoCliente from ContaBancaria where NomeCliente =? and emailCliente=? and senhaCliente=?;";
+            preparedStatement = conexao1.prepareStatement(sql);
+            preparedStatement.setString(1,NomeCliente);
+            preparedStatement.setString(2,emailCliente);
+            preparedStatement.setString(3,senhaCliente);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                saldoCliente = saldoCliente - valorReducao;
+                sql = "UPDATE ContaBancaria SET saldoCliente = ? WHERE NomeCliente =? and emailCliente=? and senhaCliente=?;";
+                preparedStatement = conexao1.prepareStatement(sql);
+                preparedStatement.setDouble(1,saldoCliente);
+                preparedStatement.setString(2, NomeCliente);
+                preparedStatement.setString(3,emailCliente);
+                preparedStatement.setString(4,senhaCliente);
+                preparedStatement.execute();
+            }
+
+
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Driver do Banco de dados não localizado!");
+        } catch (SQLException ex) {
+            System.out.println("Erro durante a conexão com o banco de dados! Erro:" + ex.getMessage());
+        } finally {
+            if (conexao1 != null) {
+                conexao1.close();
+            }
+        }
+    }
 }
