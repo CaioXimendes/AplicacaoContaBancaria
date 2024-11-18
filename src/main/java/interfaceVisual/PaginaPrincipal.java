@@ -1,5 +1,7 @@
 package interfaceVisual;
 
+import conexaoBancoDeDados.ConexaoBancoDeDados;
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.SQLException;
@@ -66,6 +68,20 @@ public class PaginaPrincipal extends JFrame{
                 nomeTextArea.setText(nomeCliente);
                 numerocontaTextArea.setText(String.valueOf(numeroConta));
                 valorSaldoTextArea.setText(String.valueOf(saldoCliente));
+            }
+        });
+        consultarSaldoButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO: atualizar os valores do saldo apos clicar no botão consultarSaldoButton
+                ConexaoBancoDeDados conexao1 = new ConexaoBancoDeDados();
+                try{
+                    conexao1.consultarInformacoesBanco(nomeCliente,emailCliente,senhaCliente);
+                    valorSaldoTextArea.setText(String.valueOf(saldoCliente));
+                }
+                catch (SQLException ex){
+                    throw new RuntimeException();
+                }
             }
         });
 
