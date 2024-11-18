@@ -154,7 +154,7 @@ public class ConexaoBancoDeDados{
             }
         }
     }
-    public void realizarTransferencia(int numeroContaCliente, double ValorTransferencia) throws SQLException{
+    public void realizarTransferencia(int numeroConta,int numeroContaTransferencia, double ValorTransferencia) throws SQLException{
         Connection conexao1 = null;
         try {
             ResultSet resultSet;
@@ -168,16 +168,32 @@ public class ConexaoBancoDeDados{
             preparedStatement.execute();
             sql = "SELECT saldoCliente from ContaBancaria where numeroContaCliente=?;";
             preparedStatement = conexao1.prepareStatement(sql);
-            preparedStatement.setInt(1, numeroContaCliente);
+            preparedStatement.setInt(1, numeroContaTransferencia);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
+                //acrescimo do saldo na conta destino
                 saldoCliente = resultSet.getDouble("saldoCliente");
                 saldoCliente = saldoCliente+ValorTransferencia;
                 sql = "UPDATE ContaBancaria SET saldoCliente = ? WHERE numeroContaCliente =?;";
                 preparedStatement = conexao1.prepareStatement(sql);
                 preparedStatement.setDouble(1,saldoCliente);
-                preparedStatement.setInt(2, numeroContaCliente);
+                preparedStatement.setInt(2, numeroContaTransferencia);
                 preparedStatement.execute();
+                // redução do saldo na conta original
+                sql = "SELECT saldoCliente from ContaBancaria where numeroContaCliente=?;";
+                preparedStatement = conexao1.prepareStatement(sql);
+                preparedStatement.setInt(1, numeroConta);
+                resultSet = preparedStatement.executeQuery();
+                if(resultSet.next()){
+                    saldoCliente = resultSet.getDouble("saldoCliente");
+                    sql = "UPDATE ContaBancaria SET saldoCliente = ? WHERE numeroContaCliente =?;";
+                    saldoCliente = saldoCliente - ValorTransferencia;
+                    preparedStatement = conexao1.prepareStatement(sql);
+                    preparedStatement.setDouble(1, saldoCliente);
+                    preparedStatement.setInt(2, numeroConta);
+                    preparedStatement.execute();
+                }
+
             }
         } catch (ClassNotFoundException ex) {
             System.out.println("Driver do Banco de dados não localizado!");

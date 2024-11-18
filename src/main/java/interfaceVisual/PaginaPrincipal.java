@@ -97,8 +97,11 @@ public class PaginaPrincipal extends JFrame{
                 valorTransferencia = Double.parseDouble(valorTransferenciaTextArea.getText());
                 numeroContaTransferencia = Integer.parseInt(numeroContaTransferenciaTextArea.getText());
                 try{
-                    if (valorTransferencia>0){
-                        conexao1.realizarTransferencia(numeroContaTransferencia,valorTransferencia);
+                    if (valorTransferencia>0 && valorTransferencia <= saldoCliente){
+                        conexao1.realizarTransferencia(numeroConta,numeroContaTransferencia,valorTransferencia);
+                        //conexao1.reduzirSaldo(nomeCliente, emailCliente, senhaCliente, saldoCliente, valorTransferencia);
+                        saldoCliente = saldoCliente - valorTransferencia;
+                        valorSaldoTextArea.setText(String.valueOf(saldoCliente));
                         JOptionPane.showMessageDialog(transferirButton, "Transferência realizada para a conta: "+numeroContaTransferencia);
                         numeroContaTransferenciaTextArea.setText("");
                     }else{
