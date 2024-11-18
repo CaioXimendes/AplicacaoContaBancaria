@@ -12,7 +12,7 @@ public class PaginaPrincipal extends JFrame{
     private JTextArea valorSaldoTextArea;
     private JTextArea valorDepositoTextArea;
     private JTextArea valorTransferenciaTextArea;
-    private JTextArea numeroTextArea;
+    private JTextArea numeroContaTransferenciaTextArea;
     private JButton transferirButton;
     private JButton sairButton;
     private JPanel painelPrincipal;
@@ -24,6 +24,8 @@ public class PaginaPrincipal extends JFrame{
     private String senhaCliente;
     private int numeroConta;
     private double saldoCliente;
+    private double valorTransferencia;
+    private int numeroContaTransferencia;
 
     public String getNomeCliente() {
         return nomeCliente;
@@ -58,6 +60,9 @@ public class PaginaPrincipal extends JFrame{
     public void setNumeroConta(int numeroConta){
         this.numeroConta = numeroConta;
     }
+    public void setValorTransferencia(double valorTransferencia){
+        this.valorTransferencia = valorTransferencia;
+    }
     public PaginaPrincipal() throws SQLException {
         setContentPane(painelPrincipal);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -88,7 +93,21 @@ public class PaginaPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO: atualizar os valores de saldo apos realizar uma transferencia
-
+                ConexaoBancoDeDados conexao1 = new ConexaoBancoDeDados();
+                valorTransferencia = Double.parseDouble(valorTransferenciaTextArea.getText());
+                numeroContaTransferencia = Integer.parseInt(numeroContaTransferenciaTextArea.getText());
+                try{
+                    if (valorTransferencia>0){
+                        conexao1.realizarTransferencia(numeroContaTransferencia,valorTransferencia);
+                        JOptionPane.showMessageDialog(transferirButton, "Transferência realizada para a conta: "+numeroContaTransferencia);
+                        numeroContaTransferenciaTextArea.setText("");
+                    }else{
+                        JOptionPane.showMessageDialog(transferirButton,"Insira apenas um valor válido para tranferência!");
+                    }
+                }
+                catch (SQLException ex){
+                    throw new RuntimeException();
+                }
             }
         });
 
