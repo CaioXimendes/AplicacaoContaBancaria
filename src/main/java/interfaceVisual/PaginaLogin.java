@@ -52,6 +52,8 @@ public class PaginaLogin extends JFrame{
                         paginaPrincipal.setSize(500,500);
                         paginaPrincipal.setLocation(700,300);
                         paginaPrincipal.setNomeCliente(nomeCliente);
+                        paginaPrincipal.setEmailCliente(emailCliente);
+                        paginaPrincipal.setSenhaCliente(senhaCliente);
                         paginaPrincipal.setNumeroConta(conexao1.getNumeroConta());
                         paginaPrincipal.setSaldoCliente(conexao1.getSaldoCliente());
                         System.out.println(paginaPrincipal.getNomeCliente());
