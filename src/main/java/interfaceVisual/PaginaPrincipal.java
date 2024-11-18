@@ -73,7 +73,6 @@ public class PaginaPrincipal extends JFrame{
         consultarSaldoButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: atualizar os valores do saldo apos clicar no botão consultarSaldoButton
                 ConexaoBancoDeDados conexao1 = new ConexaoBancoDeDados();
                 try{
                     conexao1.consultarInformacoesBanco(nomeCliente,emailCliente,senhaCliente);
@@ -97,6 +96,20 @@ public class PaginaPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO: atualizar os valores de saldo apos realizar um deposito
+                ConexaoBancoDeDados conexao1 = new ConexaoBancoDeDados();
+                try{
+                    if (Double.parseDouble(valorDepositoTextArea.getText()) > 0){
+                        conexao1.consultarInformacoesBanco(nomeCliente,emailCliente,senhaCliente);
+                        saldoCliente = saldoCliente + Double.parseDouble(valorDepositoTextArea.getText());
+                        valorSaldoTextArea.setText(String.valueOf(saldoCliente));
+                        valorDepositoTextArea.setText("");
+                    } else{
+                        JOptionPane.showMessageDialog(depositarButton, "Insira apenas um valor válido para depósito!");
+                    }
+                }
+                catch (SQLException ex){
+                    throw new RuntimeException();
+                }
             }
         });
         sairButton.addActionListener(new ActionListener() {

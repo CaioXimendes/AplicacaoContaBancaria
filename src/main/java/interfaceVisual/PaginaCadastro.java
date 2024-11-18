@@ -39,7 +39,6 @@ public class PaginaCadastro extends JFrame{
                 //coloquei mesmo assim para ver a diferença
                 painelprincipal.setVisible(false);
                 dispose();
-
             }
         });
     }
