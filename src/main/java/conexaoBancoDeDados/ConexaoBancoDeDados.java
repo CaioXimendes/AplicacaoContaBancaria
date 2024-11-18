@@ -22,7 +22,7 @@ public class ConexaoBancoDeDados{
         Connection conexao1 = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conexao1 = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/?user=root","root","database123");
+            conexao1 = DriverManager.getConnection("jdbc:mysql://192.168.15.8:3306/?user=caiofsx", "caiofsx", "database123");
             Statement statement = conexao1.createStatement();
             PreparedStatement preparedStatement;
             String sql;
@@ -59,7 +59,7 @@ public class ConexaoBancoDeDados{
         try {
             ResultSet resultSet;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conexao1 = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/?user=root", "root", "database123");
+            conexao1 = DriverManager.getConnection("jdbc:mysql://192.168.15.8:3306/?user=caiofsx", "caiofsx", "database123");
             Statement statement = conexao1.createStatement();
             PreparedStatement preparedStatement;
             String sql;
