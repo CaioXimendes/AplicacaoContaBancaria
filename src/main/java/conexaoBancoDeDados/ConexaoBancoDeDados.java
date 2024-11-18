@@ -124,4 +124,33 @@ public class ConexaoBancoDeDados{
             }
         }
     }
+    public void atualizarSaldoBanco(String NomeCliente, String emailCliente, String senhaCliente, double SaldoCliente) throws SQLException{
+        Connection conexao1 = null;
+        try {
+            ResultSet resultSet;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conexao1 = DriverManager.getConnection("jdbc:mysql://192.168.15.8:3306/?user=caiofsx", "caiofsx", "database123");
+            Statement statement = conexao1.createStatement();
+            PreparedStatement preparedStatement;
+            String sql;
+            sql = "use bancodedados;";
+            preparedStatement = conexao1.prepareStatement(sql);
+            preparedStatement.execute();
+            sql = "UPDATE ContaBancaria SET saldoCliente = ? WHERE NomeCliente =? and emailCliente=? and senhaCliente=?;";
+            preparedStatement = conexao1.prepareStatement(sql);
+            preparedStatement.setDouble(1,SaldoCliente);
+            preparedStatement.setString(2, NomeCliente);
+            preparedStatement.setString(3,emailCliente);
+            preparedStatement.setString(4,senhaCliente);
+            preparedStatement.execute();
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Driver do Banco de dados não localizado!");
+        } catch (SQLException ex) {
+            System.out.println("Erro durante a conexão com o banco de dados! Erro:" + ex.getMessage());
+        } finally {
+            if (conexao1 != null) {
+                conexao1.close();
+            }
+        }
+    }
 }

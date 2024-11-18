@@ -103,6 +103,7 @@ public class PaginaPrincipal extends JFrame{
                         saldoCliente = saldoCliente + Double.parseDouble(valorDepositoTextArea.getText());
                         valorSaldoTextArea.setText(String.valueOf(saldoCliente));
                         valorDepositoTextArea.setText("");
+                        conexao1.atualizarSaldoBanco(nomeCliente,emailCliente,senhaCliente,saldoCliente);
                     } else{
                         JOptionPane.showMessageDialog(depositarButton, "Insira apenas um valor válido para depósito!");
                     }
